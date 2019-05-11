@@ -1,0 +1,16 @@
+# Ide #
+##################
+.classpath
+.project
+.settings
+.idea
+.metadata
+*.config
+*.restore
+*.iml
+*.ipr
+##################
+
+vendor
+composer.phar
+composer.lock
