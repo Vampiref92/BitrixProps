@@ -1,4 +1,4 @@
-<?php namespace BitrixProps\Props;
+<?php namespace Vf92\BitrixProps\Props\Iblock;
 
 use CFile;
 use Exception;

@@ -1,7 +1,15 @@
 {
-  "name": "BitrixProps",
-  "description": "BitrixProps",
-  "type": "props",
+  "name": "vf92/bitrix_props",
+  "description": "Дополнительные свойства для Битрикс",
+  "homepage": "https://github.com/Vampiref92/BitrixProps",
+  "type": "library",
+  "license": "proprietary",
+  "keywords": [
+    "bitrix",
+    "sergey",
+    "frolov",
+    "props"
+  ],
   "authors": [
     {
       "name": "Sergey Frolov",
@@ -9,17 +17,6 @@
     }
   ],
   "minimum-stability": "stable",
-  "extra": {
-    "installer-paths": {
-      "modules/{$name}/": [
-        "type:bitrix-module"
-      ],
-      "tools/{$name}/": [
-        "type:wordpress-plugin"
-      ]
-    },
-    "optimize-autoloader": true
-  },
   "autoload": {
     "psr-4": {
       "BitrixProps\\": "src/"
