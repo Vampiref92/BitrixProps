@@ -19,7 +19,7 @@
   "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
-      "BitrixProps\\": "src/"
+      "Vf92\\BitrixProps\\": "src/BitrixProps/"
     }
   },
   "require": {

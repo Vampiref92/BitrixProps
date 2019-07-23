@@ -1,10 +1,11 @@
-<?php namespace Vf92\BitrixProps\Props\Iblock;
+<?php namespace Vf92\BitrixProps\Iblock;
 
 use CFile;
 use Exception;
 use Vf92\BitrixUtils\Orm\Model\Image;
 use WebArch\BitrixIblockPropertyType\Abstraction\IblockPropertyTypeBase;
 
+/** @todo multiple */
 class YoutubeVideo extends IblockPropertyTypeBase
 {
     /**

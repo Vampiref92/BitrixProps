@@ -1,4 +1,4 @@
-<?php namespace Vf92\BitrixProps\Props\UserProps;
+<?php namespace Vf92\BitrixProps\UserProps;
 
 use CFile;
 use Exception;
@@ -8,6 +8,7 @@ use WebArch\BitrixUserPropertyType\Abstraction\Custom\ConvertibleValueInterface;
 use WebArch\BitrixUserPropertyType\Abstraction\DbColumnType\StringColTypeTrait;
 use WebArch\BitrixUserPropertyType\Abstraction\UserTypeBase;
 
+/** @todo multiple */
 class YoutubeVideo extends UserTypeBase implements ConvertibleValueInterface
 {
     use StringColTypeTrait;
