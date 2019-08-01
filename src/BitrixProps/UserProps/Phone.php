@@ -1,10 +1,13 @@
 <?php namespace Vf92\BitrixProps\UserProps;
 
+use Vf92\MiscUtils\Helpers\Exception\WrongPhoneNumberException;
+use Vf92\MiscUtils\Helpers\PhoneHelper;
+use WebArch\BitrixUserPropertyType\Abstraction\Custom\CheckableValueInterface;
 use WebArch\BitrixUserPropertyType\Abstraction\Custom\ConvertibleValueInterface;
 use WebArch\BitrixUserPropertyType\Abstraction\DbColumnType\StringColTypeTrait;
 use WebArch\BitrixUserPropertyType\Abstraction\UserTypeBase;
 
-class Phone extends UserTypeBase implements ConvertibleValueInterface
+class Phone extends UserTypeBase implements ConvertibleValueInterface, CheckableValueInterface
 {
     use StringColTypeTrait;
 
@@ -21,7 +24,11 @@ class Phone extends UserTypeBase implements ConvertibleValueInterface
      */
     public static function onBeforeSave($userField, $value)
     {
-        // TODO: Implement onBeforeSave() method.
+        try {
+            return PhoneHelper::normalizePhone($value);
+        } catch (WrongPhoneNumberException $e) {
+            return '';
+        }
     }
 
     /**
@@ -34,7 +41,7 @@ class Phone extends UserTypeBase implements ConvertibleValueInterface
      */
     public static function onAfterFetch($userField, $rawValue)
     {
-        // TODO: Implement onAfterFetch() method.
+        return $rawValue;
     }
 
     /**
@@ -44,7 +51,7 @@ class Phone extends UserTypeBase implements ConvertibleValueInterface
      */
     public static function getBaseType()
     {
-        // TODO: Implement getBaseType() method.
+        return 'string';
     }
 
     /**
@@ -54,7 +61,7 @@ class Phone extends UserTypeBase implements ConvertibleValueInterface
      */
     public static function getDescription()
     {
-        // TODO: Implement getDescription() method.
+        return 'Телефон';
     }
 
     /**
@@ -105,7 +112,12 @@ class Phone extends UserTypeBase implements ConvertibleValueInterface
      */
     public static function getSettingsHTML($userField, $htmlControl, $isVarsFromForm)
     {
-        // TODO: Implement getSettingsHTML() method.
+        return <<<END
+        <tr>
+            <td>&nbsp;</td>
+            <td><p>Тип свойства телефон </p></td>
+        </tr>
+END;
     }
 
     /**
@@ -120,6 +132,27 @@ class Phone extends UserTypeBase implements ConvertibleValueInterface
      */
     public static function prepareSettings($userField)
     {
-        // TODO: Implement prepareSettings() method.
+        return [];
+    }
+
+    /**
+     * Эта функция валидатор.
+     *
+     * <p>Вызывается из метода CheckFields объекта $USER_FIELD_MANAGER.</p>
+     * <p>Который в свою очередь может быть вызван из меторов Add/Update сущности владельца свойств.</p>
+     *
+     * @param array $userField Массив описывающий поле.
+     * @param array $value     значение для проверки на валидность
+     *
+     * @return array массив массивов ("id","text") ошибок. Если ошибок нет, должен возвращаться пустой массив.
+     */
+    public static function checkFields($userField, $value)
+    {
+        if(!PhoneHelper::isPhone($value['VALUE'])){
+            return [
+                [1, 'Не корректный телефон']
+            ];
+        }
+        return [];
     }
 }
