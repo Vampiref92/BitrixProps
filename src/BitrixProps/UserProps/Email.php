@@ -9,15 +9,7 @@ class Email extends UserTypeBase implements ConvertibleValueInterface, Checkable
     use StringColTypeTrait;
 
     /**
-     * Эта функция вызывается перед сохранением значений в БД.
-     *
-     * <p>Вызывается из метода Update объекта $USER_FIELD_MANAGER.</p>
-     * <p>Для множественных значений функция вызывается несколько раз.</p>
-     *
-     * @param array $userField Массив описывающий поле.
-     * @param mixed $value     Значение.
-     *
-     * @return string значение для вставки в БД.
+     * @inheritdoc
      */
     public static function onBeforeSave($userField, $value)
     {
@@ -25,12 +17,7 @@ class Email extends UserTypeBase implements ConvertibleValueInterface, Checkable
     }
 
     /**
-     * Вызывается после извлечения значения из БД.
-     *
-     * @param array $userField Массив описывающий поле.
-     * @param array $rawValue  ['VALUE' => <актуальное значение>]
-     *
-     * @return array
+     * @inheritdoc
      */
     public static function onAfterFetch($userField, $rawValue)
     {
@@ -38,19 +25,15 @@ class Email extends UserTypeBase implements ConvertibleValueInterface, Checkable
     }
 
     /**
-     * Возвращает базовый тип на котором будут основаны операции фильтра (int, double, string, date, datetime)
-     *
-     * @return string
+     * @inheritdoc
      */
     public static function getBaseType()
     {
-        return 'string';
+        return self::BASE_TYPE_STRING;
     }
 
     /**
-     * Возвращает описание для показа в интерфейсе (выпадающий список и т.п.)
-     *
-     * @return string
+     * @inheritdoc
      */
     public static function getDescription()
     {
@@ -58,50 +41,31 @@ class Email extends UserTypeBase implements ConvertibleValueInterface, Checkable
     }
 
     /**
-     * Эта функция вызывается при выводе формы редактирования значения свойства.
-     *
-     * <p>Возвращает html для встраивания в ячейку таблицы.
-     * в форму редактирования сущности (на вкладке "Доп. свойства")</p>
-     * <p>Элементы $htmlControl приведены к html безопасному виду.</p>
-     *
-     * @param array $userField   Массив описывающий поле.
-     * @param array $htmlControl Массив управления из формы. Содержит элементы NAME и VALUE.
-     *
-     * @return string HTML для вывода.
+     * @inheritdoc
      */
     public static function getEditFormHTML($userField, $htmlControl)
     {
-        // TODO: Implement getEditFormHTML() method.
+        $html = <<<END
+            <input type="text" 
+                   name="{$htmlControl['NAME']}" 
+                   value="{$htmlControl['VALUE']}" 
+                   placeholder="Email" 
+                   size="60">
+END;
+
+        return $html;
     }
 
     /**
-     * Эта функция вызывается при выводе значения свойства в списке элементов.
-     *
-     * <p>Возвращает html для встраивания в ячейку таблицы.</p>
-     * <p>Элементы $arHtmlControl приведены к html безопасному виду.</p>
-     *
-     * @param array $arUserField   Массив описывающий поле.
-     * @param array $arHtmlControl Массив управления из формы. Содержит элементы NAME и VALUE.
-     *
-     * @return string HTML для вывода.
+     * @inheritdoc
      */
     public static function getAdminListViewHtml($userField, $htmlControl)
     {
-        // TODO: Implement getAdminListViewHtml() method.
+        return $htmlControl['VALUE'];
     }
 
     /**
-     * Эта функция вызывается при выводе формы настройки свойства.
-     *
-     * <p>Возвращает html для встраивания в 2-х колоночную таблицу.
-     * в форму usertype_edit.php</p>
-     * <p>т.е. tr td bla-bla /td td edit-edit-edit /td /tr </p>
-     *
-     * @param array $userField
-     * @param array $htmlControl
-     * @param bool  $isVarsFromForm
-     *
-     * @return string
+     * @inheritdoc
      */
     public static function getSettingsHTML($userField, $htmlControl, $isVarsFromForm)
     {
@@ -114,14 +78,7 @@ END;
     }
 
     /**
-     * Эта функция вызывается перед сохранением метаданных свойства в БД.
-     *
-     * <p>Она должна "очистить" массив с настройками экземпляра типа свойства.
-     * Для того что бы случайно/намеренно никто не записал туда всякой фигни.</p>
-     *
-     * @param array $userField Массив описывающий поле. <b>Внимание!</b> это описание поля еще не сохранено в БД!
-     *
-     * @return array Массив который в дальнейшем будет сериализован и сохранен в БД.
+     * @inheritdoc
      */
     public static function prepareSettings($userField)
     {
@@ -129,15 +86,7 @@ END;
     }
 
     /**
-     * Эта функция валидатор.
-     *
-     * <p>Вызывается из метода CheckFields объекта $USER_FIELD_MANAGER.</p>
-     * <p>Который в свою очередь может быть вызван из меторов Add/Update сущности владельца свойств.</p>
-     *
-     * @param array $userField Массив описывающий поле.
-     * @param array $value     значение для проверки на валидность
-     *
-     * @return array массив массивов ("id","text") ошибок. Если ошибок нет, должен возвращаться пустой массив.
+     * @inheritdoc
      */
     public static function checkFields($userField, $value)
     {
