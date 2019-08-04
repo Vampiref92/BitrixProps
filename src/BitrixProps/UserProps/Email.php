@@ -45,10 +45,14 @@ class Email extends UserTypeBase implements ConvertibleValueInterface, Checkable
      */
     public static function getEditFormHTML($userField, $htmlControl)
     {
+        $val = $htmlControl['VALUE'];
+        if (is_array($htmlControl['VALUE'])) {
+            $val = $htmlControl['VALUE']['VALUE'];
+        }
         $html = <<<END
             <input type="text" 
                    name="{$htmlControl['NAME']}" 
-                   value="{$htmlControl['VALUE']}" 
+                   value="{$val}" 
                    placeholder="Email" 
                    size="60">
 END;
@@ -61,7 +65,11 @@ END;
      */
     public static function getAdminListViewHtml($userField, $htmlControl)
     {
-        return $htmlControl['VALUE'];
+        $val = $htmlControl['VALUE'];
+        if (is_array($htmlControl['VALUE'])) {
+            $val = $htmlControl['VALUE']['VALUE'];
+        }
+        return $val;
     }
 
     /**
