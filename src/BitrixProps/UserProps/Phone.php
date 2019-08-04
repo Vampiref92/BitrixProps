@@ -97,9 +97,13 @@ END;
      */
     public static function checkFields($userField, $value)
     {
-        if(!PhoneHelper::isPhone($value['VALUE'])){
+        $val = $value;
+        if(is_array($value)){
+            $val=$value['VALUE'];
+        }
+        if(!PhoneHelper::isPhone($val)){
             return [
-                [1, 'Не корректный телефон']
+                ['id'=>1, 'text'=>'Не корректный телефон']
             ];
         }
         return [];

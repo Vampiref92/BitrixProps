@@ -59,7 +59,7 @@ class User extends UserTypeBase implements ConvertibleValueInterface, CheckableV
     {
         /** @var \Bitrix\Main\EO_User $user */
         $user = $htmlControl['VALUE']['user'];
-        return '['.$user->getId().'] '.$user->getLastName().' '.$user->getName();
+        return '[' . $user->getId() . '] ' . $user->getLastName() . ' ' . $user->getName();
     }
 
     /**
@@ -88,15 +88,20 @@ END;
      */
     public static function checkFields($userField, $value)
     {
-        if ((int)$value['VALUE'] < 1) {
+        $val = $value;
+        if (is_array($value)) {
+            $val = $value['VALUE'];
+        }
+        if ((int)$val < 1) {
             return [
-                [1, 'Не корректный id пользователя'],
+                ['id' => 1, 'text'=>'Не корректный id пользователя'],
             ];
         }
-        $count = \Bitrix\Main\UserTable::getCount((new \Bitrix\Main\ORM\Query\Filter\ConditionTree())->where('ID', $value['VALUE']));
-        if($count === 0){
+        $count = \Bitrix\Main\UserTable::getCount((new \Bitrix\Main\ORM\Query\Filter\ConditionTree())->where('ID',
+            $val));
+        if ($count === 0) {
             return [
-                [2, 'Пользователь с данным id пользователя не найден'],
+                ['id' => 2, 'text'=>'Пользователь с данным id пользователя не найден'],
             ];
         }
         return [];

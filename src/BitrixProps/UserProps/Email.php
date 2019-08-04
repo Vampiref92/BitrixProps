@@ -90,9 +90,13 @@ END;
      */
     public static function checkFields($userField, $value)
     {
-        if (filter_var($value['VALUE'], FILTER_VALIDATE_EMAIL) === false){
+        $val = $value;
+        if(is_array($value)){
+            $val=$value['VALUE'];
+        }
+        if (filter_var($val, FILTER_VALIDATE_EMAIL) === false){
             return [
-                [1, 'Не корректный email']
+                ['id'=>1, 'text'=>'Не корректный email']
             ];
         }
         return [];

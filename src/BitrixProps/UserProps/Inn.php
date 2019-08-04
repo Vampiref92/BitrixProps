@@ -26,7 +26,7 @@ class Inn extends UserTypeBase implements ConvertibleValueInterface, CheckableVa
     }
 
     /**
-     *@inheritdoc
+     * @inheritdoc
      */
     public static function getBaseType()
     {
@@ -91,9 +91,13 @@ END;
      */
     public static function checkFields($userField, $value)
     {
-        if (!static::validInn($value['VALUE'])) {
+        $val = $value;
+        if (is_array($value)) {
+            $val = $value['VALUE'];
+        }
+        if (!static::validInn($val)) {
             return [
-                [1, 'Не корректный ИНН'],
+                ['id' => 1, 'text' => 'Не корректный ИНН'],
             ];
         }
         return [];
