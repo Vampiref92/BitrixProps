@@ -16,10 +16,7 @@ class Email extends IblockPropertyTypeBase
     }
 
     /**
-     * Возвращает краткое описание. Будет выведено в списке выбора типа свойства при редактировании информационного
-     * блока.
-     *
-     * @return string
+     * @inheritDoc
      */
     public function getDescription()
     {
@@ -27,14 +24,7 @@ class Email extends IblockPropertyTypeBase
     }
 
     /**
-     * Возвращает маппинг реализованных для данного типа свойства методов.
-     *
-     * Неуказанные методы будут заменены на стандартную реализацию из модуля инфоблоков. Если же метод указан, но не
-     * имеет конкретной реализации, будет выброшено исключение NotImplementedMethodException()
-     *
-     * @return array
-     * @see IblockPropertyTypeInterface::getUserTypeDescription
-     *
+     * @inheritDoc
      */
     public function getCallbacksMapping()
     {
@@ -97,7 +87,7 @@ class Email extends IblockPropertyTypeBase
      * @inheritdoc
      */
     public function checkFields(array $property, array $value){
-        if (filter_var($value, FILTER_VALIDATE_EMAIL) !== false)
+        if (filter_var($value['VALUE'], FILTER_VALIDATE_EMAIL) !== false)
         {
             return [];
         }

@@ -47,16 +47,17 @@ class YoutubeVideo extends UserTypeBase implements ConvertibleValueInterface
     public static function getEditFormHTML($userField, $htmlControl)
     {
         $preview = null;
-        if (!empty($value['VALUE']['PREVIEW'])) {
+        $value = $htmlControl['VALUE'];
+        if (!empty($value['PREVIEW'])) {
             /** @var Image $preview */
             $preview = $value['VALUE']['PREVIEW'];
         }
         $return =
-            '<label>ID видео: <input type="text" name="' . $htmlControl['VALUE'] . '[ID]" value="' . $value['VALUE']['ID'] . '" /></label><br/>' .
-            '<label>Название видео: <input type="text" name="' . $htmlControl['NAME'] . '[NAME]" value="' . $value['VALUE']['NAME'] . '" /></label><br/>' .
-            '<label>Превью картинка: <input type="hidden" name="' . $htmlControl['VALUE'] . '[PREVIEW]" value="' . ($preview !== null ? $preview->getId() : '') . '" /><input type="file" name="' . $htmlControl['VALUE'] . '[PREVIEW_FILE]"/></label>';
+            '<label>ID видео: <input type="text" name="' . $htmlControl['NAME'] . '[ID]" value="' . $value['ID'] . '" /></label><br/>' .
+            '<label>Название видео: <input type="text" name="' . $htmlControl['NAME'] . '[NAME]" value="' . $value['NAME'] . '" /></label><br/>' .
+            '<label>Превью картинка: <input type="hidden" name="' . $htmlControl['NAME'] . '[PREVIEW]" value="' . ($preview !== null ? $preview->getId() : '') . '" /><input type="file" name="' . $htmlControl['NAME'] . '[PREVIEW_FILE]"/></label>';
 
-            $return .= '<br><small>Текущее значение: ' . static::getHumanValueRepresentation($htmlControl['VALUE']) . '</small>';
+            $return .= '<br><small>Текущее значение: ' . static::getHumanValueRepresentation($value) . '</small>';
 
         if ($userField['WITH_DESCRIPTION'] === 'Y') {
             $return .= '<div><input type="text" size="'
@@ -64,7 +65,7 @@ class YoutubeVideo extends UserTypeBase implements ConvertibleValueInterface
                 . '" name="'
                 . $userField['DESCRIPTION']
                 . '" value="'
-                . htmlspecialchars($htmlControl['VALUE']['DESCRIPTION'])
+                . htmlspecialchars($value['DESCRIPTION'])
                 . '" /></div>';
         }
 
