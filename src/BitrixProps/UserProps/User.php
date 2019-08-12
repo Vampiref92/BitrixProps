@@ -1,5 +1,6 @@
 <?php namespace Vf92\BitrixProps\UserProps;
 
+use Bitrix\Main\UserTable;
 use WebArch\BitrixUserPropertyType\Abstraction\Custom\CheckableValueInterface;
 use WebArch\BitrixUserPropertyType\Abstraction\Custom\ConvertibleValueInterface;
 use WebArch\BitrixUserPropertyType\Abstraction\DbColumnType\IntegerColTypeTrait;
@@ -23,7 +24,7 @@ class User extends UserTypeBase implements ConvertibleValueInterface, CheckableV
      */
     public static function onAfterFetch($userField, $rawValue)
     {
-        $user = \Bitrix\Main\UserTable::getById($rawValue)->fetchObject();
+        $user = UserTable::getById($rawValue)->fetchObject();
         return ['id' => $rawValue, 'user' => $user];
     }
 
@@ -97,7 +98,7 @@ END;
                 ['id' => 1, 'text'=>'Не корректный id пользователя'],
             ];
         }
-        $count = \Bitrix\Main\UserTable::getCount((new \Bitrix\Main\ORM\Query\Filter\ConditionTree())->where('ID',
+        $count = UserTable::getCount((new \Bitrix\Main\ORM\Query\Filter\ConditionTree())->where('ID',
             $val));
         if ($count === 0) {
             return [

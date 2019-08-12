@@ -14,3 +14,4 @@
 vendor
 composer.phar
 composer.lock
+orm_annotations.php
